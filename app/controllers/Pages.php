@@ -15,5 +15,9 @@ class Pages extends Controller {
     public function signup() {
         $this->view('pages/signup');
     }
+
+    public function signin() {
+        $this->view('pages/signin');
+    }
 }
 ?>

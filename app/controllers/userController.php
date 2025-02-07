@@ -51,14 +51,16 @@ class UserController extends Controller {
             $data = [
                 'email' => trim($_POST['email']),
                 'password' => trim($_POST['password'])
+
             ];
 
             try {
                 $user = $this->userModel::signin($data['email'], $data['password']);
                 // Check the user role and redirect accordingly
-                switch ($user->role) {
+                switch ($_SESSION['role']) {
                     case 1: // Admin
-                        $this->view('admin/admin_dashboard');
+
+                        $this->view('admin/admin_dashboard' );
                         break;
                     case 2: // Teacher
                         $this->view('teacher/teacher');

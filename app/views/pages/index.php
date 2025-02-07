@@ -95,7 +95,7 @@
                         <!-- Auth Buttons -->
                         <div id="auth-buttons">
                             <button class="login-btn px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300">
-                                <a href="<?php echo URLROOT ?>/userController/login">Connexion</a>
+                                <a href="<?php echo URLROOT ?>/userController/signin">Connexion</a>
                             </button>
                             <button class="register-btn ml-2 px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-purple-600 rounded-full hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300">
                                 <a href="<?php echo URLROOT ?>/userController/signup">Inscription</a>

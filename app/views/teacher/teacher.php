@@ -1,18 +1,7 @@
-<?php
-session_start();
-
-require "../../model/statistics.php";
-
-$stats = new Statistics();
-$teacherId = $_SESSION['user_id'];
-$totalStudents = $stats->getTeacherTotalStudents($teacherId);
-$topCourses = $stats->getTotalCourse($teacherId);
 
 
-require "../../model/Course.php";
-$courses = new VideoCourse(null, null, null, $_SESSION['user_id'], null,NULL);
-$allCourses = $courses->getallCourse($_SESSION['user_id']);
-?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">

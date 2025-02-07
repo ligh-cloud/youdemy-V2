@@ -13,6 +13,7 @@ $init = new Core();
 ?>
 
 <!DOCTYPE html>
+0
 <html lang="en">
 <head>
     <meta charset="UTF-8">
