@@ -156,7 +156,7 @@
             <div class="p-6">
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="text-xl font-bold text-gray-800">My Courses</h2>
-                    <a href="add-course.php"
+                    <a href="<?php echo URLROOT ?>/TeacherController/add_course.php>"
                        class="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg
                                   hover:bg-blue-700 transition-all duration-200">
                         <i class="fas fa-plus"></i>

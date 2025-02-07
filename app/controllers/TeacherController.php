@@ -1,9 +1,10 @@
 <?php
-require_once '../../app/models/Course.php';
-require_once '../../app/models/Category.php';
-require_once '../../app/models/Tag.php';
+require_once APPROOT . '/models/Course.php';
+require_once APPROOT . '/models/Category.php';
+require_once APPROOT . '/models/Tag.php';
+session_start();
 
-class TeacherController {
+class TeacherController extends Controller {
     public function __construct() {
         // Ensure the user is logged in and has teacher privileges
         if (!isset($_SESSION['user_id']) || $_SESSION['role'] != 2) {
@@ -12,8 +13,15 @@ class TeacherController {
         }
     }
 
+    public function index() {
+        $this->view('teacher/dashboard');
+    }
+
     public function addCourse() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Sanitize POST data
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
             $title = $_POST['title'];
             $description = $_POST['description'];
             $category = $_POST['category'];
@@ -22,14 +30,19 @@ class TeacherController {
             $image = $_FILES['image'];
             $video = $_FILES['video'];
 
-            $course = new Course();
-            $course->addCourse($title, $description, $category, $tag, $document, $image, $video);
-
-            header("Location: " . URLROOT . "/teacher/dashboard");
+            // Add course
+            $courseModel = new Course();
+            if ($courseModel->addCourse($title, $description, $category, $tag, $document, $image, $video)) {
+                $_SESSION['success'] = 'Course added successfully';
+                header("Location: " . URLROOT . "/TeacherController/addCourse");
+            } else {
+                $_SESSION['error'] = 'Failed to add course';
+                $this->view('teacher/addcourse');
+            }
             exit();
         } else {
-            $category = new Category();
-            $allCategories = $category->getAllCategories();
+            $categoryModel = new Category();
+            $allCategories = $categoryModel->getAllCategories();
             $allTags = Tag::getAllTagsSelect();
 
             $data = [
@@ -38,14 +51,6 @@ class TeacherController {
             ];
 
             $this->view('teacher/addcourse', $data);
-        }
-    }
-
-    private function view($view, $data = []) {
-        if (file_exists('../app/views/' . $view . '.php')) {
-            require_once '../app/views/' . $view . '.php';
-        } else {
-            die('View does not exist');
         }
     }
 }
