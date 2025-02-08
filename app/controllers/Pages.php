@@ -5,9 +5,13 @@ class Pages extends Controller {
     }
 
     public function index() {
-        $this->view('pages/index');
+        $course = new Course();
+        $data = [
+            "categories" => Category::getAll(),
+            "courses" => $course->getAllCourses()
+        ];
+        $this->view('pages/index', $data);
     }
-
     public function about($id) {
         echo $id;
     }

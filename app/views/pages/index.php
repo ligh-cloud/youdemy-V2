@@ -166,7 +166,7 @@
                 hx-swap="innerHTML">
             Tous
         </button>
-        <?php foreach ($categories as $category): ?>
+        <?php foreach ($data['categories'] as $category): ?>
             <button class="category-filter px-4 py-2 rounded-full text-sm"
                     data-category="<?php echo htmlspecialchars($category['id']); ?>"
                     hx-get="controller/public/fetch_courses.php?category=<?php echo urlencode($category['id']); ?>"
