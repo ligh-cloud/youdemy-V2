@@ -26,9 +26,16 @@ class Course {
         return $stmt->execute();
     }
 
-    public function getTotalCourses() {
+    public function getAllCourses() {
+        $stmt = $this->db->prepare("SELECT * FROM courses");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function getTotalCourses() {
+        $db = Database::getInstance()->getConnection();
         $sql = "SELECT COUNT(*) as total FROM courses";
-        $stmt = $this->db->prepare($sql);
+        $stmt = $db->prepare($sql);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_OBJ)->total;
     }
@@ -40,9 +47,10 @@ class Course {
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
-    public function getCourseWithMostStudents() {
-        $sql = "SELECT title, COUNT(student_id) as students FROM courses JOIN course_enrollments ON courses.id = course_enrollments.course_id GROUP BY courses.id ORDER BY students DESC LIMIT 1";
-        $stmt = $this->db->prepare($sql);
+    public static function getCourseWithMostStudents() {
+        $db = Database::getInstance()->getConnection();
+        $sql = "SELECT title, COUNT(id_user) as students FROM courses JOIN enrollenment ON courses.id_course = enrollenment.id_course GROUP BY courses.id_course ORDER BY students DESC LIMIT 1";
+        $stmt = $db->prepare($sql);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_OBJ);
     }

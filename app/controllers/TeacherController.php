@@ -16,6 +16,9 @@ class TeacherController extends Controller {
     public function index() {
         $this->view('teacher/dashboard');
     }
+    public function addCourseDash() {
+        $this->view('teacher/addCourse');
+    }
 
     public function addCourse() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -44,13 +47,17 @@ class TeacherController extends Controller {
             $categoryModel = new Category();
             $allCategories = $categoryModel->getAllCategories();
             $allTags = Tag::getAllTagsSelect();
-
+            $courseModel = new Course();
+            $allCourses = $courseModel->getAllCourses();
+            $totalCourse = $courseModel->getTotalCourses();
             $data = [
                 'allCategories' => $allCategories,
-                'allTags' => $allTags
+                'allTags' => $allTags,
+                'allCourses' => $allCourses,
+                'totalCourses' => $totalCourse
             ];
 
-            $this->view('teacher/addcourse', $data);
+            $this->view('teacher/teacher', $data);
         }
     }
 }

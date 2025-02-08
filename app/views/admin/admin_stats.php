@@ -27,8 +27,8 @@
             <tbody>
             <?php foreach ($data['coursesByCategory'] as $category): ?>
                 <tr>
-                    <td class="py-2 px-4 border-b"><?php echo htmlspecialchars($category['nom']); ?></td>
-                    <td class="py-2 px-4 border-b"><?php echo htmlspecialchars($category['total']); ?></td>
+                    <td class="py-2 px-4 border-b"><?php echo htmlspecialchars($category['title']); ?></td>
+                    <td class="py-2 px-4 border-b"><?php echo htmlspecialchars($category['description']); ?></td>
                 </tr>
             <?php endforeach; ?>
             </tbody>

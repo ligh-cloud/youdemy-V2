@@ -1,8 +1,3 @@
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -70,7 +65,7 @@
                     <i class="fas fa-user-circle text-xl"></i>
                     <span class="font-medium"><?php echo $_SESSION['nom'] . " " . $_SESSION['prenom']; ?></span>
                 </div>
-                <form method="POST" action="../../controller/public/AuthController.php">
+                <form method="POST" action="<?php echo URLROOT ?>/userController/signout">
                     <button name="logout" type="submit"
                             class="px-4 py-2 bg-red-500 text-white font-semibold rounded-lg
                                        hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400
@@ -123,7 +118,7 @@
                     </div>
                     <div>
                         <h3 class="text-gray-600 font-medium">Total Students</h3>
-                        <p class="text-3xl font-bold text-gray-800"><?php echo $totalStudents; ?></p>
+                        <p class="text-3xl font-bold text-gray-800"><?php echo isset($totalStudents) ?  $totalStudents : 0 ?></p>
                     </div>
                 </div>
             </div>
@@ -134,7 +129,7 @@
                     </div>
                     <div>
                         <h3 class="text-gray-600 font-medium">Active Courses</h3>
-                        <p class="text-3xl font-bold text-gray-800"><?php echo $topCourses['totalCourse']; ?></p>
+                        <p class="text-3xl font-bold text-gray-800"><?php echo isset($topCourses['totalCourse']) ? $topCourses['totalCourse'] : 0 ?></p>
                     </div>
                 </div>
             </div>
@@ -156,7 +151,7 @@
             <div class="p-6">
                 <div class="flex justify-between items-center mb-6">
                     <h2 class="text-xl font-bold text-gray-800">My Courses</h2>
-                    <a href="<?php echo URLROOT ?>/TeacherController/add_course.php>"
+                    <a href="<?php echo URLROOT ?>/TeacherController/addcourse"
                        class="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg
                                   hover:bg-blue-700 transition-all duration-200">
                         <i class="fas fa-plus"></i>
@@ -167,16 +162,15 @@
                     <?php foreach($allCourses as $course): ?>
                         <div class="bg-white rounded-lg shadow-sm hover:shadow-lg transition-all duration-200
                                     transform hover:-translate-y-1">
-                            <?php if($course['video']): ?>
+                            <?php if(isset($course['video']) && !empty($course['video'])): ?>
                                 <img src="../../resourses/videotitle.png" alt="video">
                             <?php else: ?>
-                                <img src="../../uploads/<?php echo $course['image'];?>"
-
+                                <img src="../../uploads/<?php echo htmlspecialchars($course['image']); ?>"
                                      alt="Course"
                                      class="w-full h-48 object-cover rounded-t-lg">
                             <?php endif; ?>
                             <div class="p-4">
-                                <h3 class="font-semibold text-gray-800"><?php echo $course['title']; ?></h3>
+                                <h3 class="font-semibold text-gray-800"><?php echo htmlspecialchars($course['title']); ?></h3>
                                 <div class="flex items-center justify-between mt-3">
                                     <p class="text-gray-600 text-sm flex items-center gap-1">
                                         <i class="fas fa-users"></i>

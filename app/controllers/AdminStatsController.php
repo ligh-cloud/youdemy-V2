@@ -11,7 +11,7 @@ class AdminStatsController extends Controller {
     public function index() {
         $data = [
             'totalCourses' => Course::getTotalCourses(),
-            'coursesByCategory' => Course::getCoursesByCategory(),
+//            'coursesByCategory' => Course::getCoursesByCategory(),
             'courseWithMostStudents' => Course::getCourseWithMostStudents(),
             'topTeachers' => Teacher::getTopTeachers()
         ];

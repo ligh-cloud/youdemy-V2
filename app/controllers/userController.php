@@ -11,7 +11,12 @@ class UserController extends Controller {
     public function index() {
         $this->view('user/index');
     }
-
+    public function signout() {
+        session_unset();
+        session_destroy();
+        header("Location: " . URLROOT );
+        exit();
+    }
     public function signup() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $data = [
@@ -48,11 +53,27 @@ class UserController extends Controller {
 
     public function signin() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $categoryModel = new Category();
+            $allCategories = $categoryModel->getAllCategories();
+            $allTags = Tag::getAllTagsSelect();
+            $courseModel = new Course();
+            $allCourses = $courseModel->getAllCourses();
+            $totalCourse = $courseModel->getTotalCourses();
             $data = [
+                'allCategories' => $allCategories,
+                'allTags' => $allTags,
+                'allCourses' => $allCourses,
+                'totalCourses' => $totalCourse,
                 'email' => trim($_POST['email']),
                 'password' => trim($_POST['password'])
-
             ];
+            $data2 = [
+                'totalCourses' => Course::getTotalCourses(),
+                'coursesByCategory' => $courseModel->getAllCourses(),
+                'courseWithMostStudents' => Course::getCourseWithMostStudents(),
+                'topTeachers' => Teacher::getTopTeachers()
+            ];
+
 
             try {
                 $user = $this->userModel::signin($data['email'], $data['password']);
@@ -60,10 +81,10 @@ class UserController extends Controller {
                 switch ($_SESSION['role']) {
                     case 1: // Admin
 
-                        $this->view('admin/admin_dashboard' );
+                        $this->view('admin/admin_dashboard' , $data2 );
                         break;
                     case 2: // Teacher
-                        $this->view('teacher/teacher');
+                        $this->view('teacher/teacher' , $data);
                         break;
                     case 3: // Student
                         $this->view('user/student');

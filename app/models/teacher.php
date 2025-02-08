@@ -1,8 +1,8 @@
 <?php
 
-require_once 'User.php';
+require_once 'Users.php';
 
-class Teacher extends User
+class Teacher extends Users
 {
     protected $enseignant;
 
@@ -54,7 +54,7 @@ class Teacher extends User
 
     public static function getTopTeachers() {
         $db = Database::getInstance()->getConnection();
-        $stmt = $db->query("SELECT users.nom, COUNT(courses.id) as courses FROM users JOIN courses ON users.id = courses.teacher_id GROUP BY users.nom ORDER BY courses DESC LIMIT 3");
+        $stmt = $db->query("SELECT users.nom, COUNT(courses.id_course) as courses FROM users JOIN courses ON users.id = courses.teacher_id GROUP BY users.nom ORDER BY courses DESC LIMIT 3");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
